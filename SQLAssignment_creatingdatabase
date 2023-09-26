@@ -1,0 +1,93 @@
+CREATE TABLE movies (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE actors (
+  id INTEGER PRIMARY KEY,
+  actor_id INT,
+  actor_name VARCHAR(255) NOT NULL,
+  FOREIGN KEY(actor_id) REFERENCES movies(id)
+);
+
+CREATE TABLE media(
+  id INT PRIMARY KEY,
+  media_id INT,
+  media_file VARCHAR(255),
+  FOREIGN KEY(media_id) REFERENCES movies(id)
+);
+CREATE TABLE genres(
+  id INT PRIMARY KEY,
+  genre_id INT,
+  genre VARCHAR(255),
+  FOREIGN KEY(genre_id) REFERENCES movies(id)
+);
+CREATE TABLE reviews(
+  id INT PRIMARY KEY,
+  review_id INT,
+  review MEDIUMTEXT,
+  FOREIGN KEY(review_id) REFERENCES movies(id)
+);
+CREATE TABLE skills(
+  id INT PRIMARY KEY,
+  skill_id INT,
+  skill VARCHAR(255),
+  FOREIGN KEY(skill_id) REFERENCES actors(id)
+);
+CREATE TABLE roles(
+  id INT PRIMARY KEY,
+  role_id INT,
+  role VARCHAR(255),
+  FOREIGN KEY(role_id) REFERENCES actors(id)
+);
+
+
+
+
+-- insert
+INSERT INTO movies VALUES (0001, "Bahubali");
+INSERT INTO movies VALUES (0002, "RRR");
+
+INSERT INTO actors VALUES(001,001,"prabhas");
+INSERT INTO actors VALUES(002,002,"NTR");
+INSERT INTO actors VALUES(003,002,"Ram Charan");
+
+INSERT INTO media VALUES (001, 001, "https:123456");
+INSERT INTO media VALUES (002, 001, "https:12345");
+INSERT INTO media VALUES(003, 002, "https:123");
+
+INSERT INTO genres VALUES(001,001,"sentmental");
+INSERT INTO genres VALUES(002,002,"motivational");
+INSERT INTO genres VALUES(003,002,"sentmental");
+
+INSERT INTO reviews VALUES(001,001,"Excellent");
+INSERT INTO reviews VALUES(002,002,"good");
+
+INSERT INTO skills VALUES(001,001,"acting");
+INSERT INTO skills VALUES(002,002,"acting");
+INSERT INTO skills VALUES(003,002,"dance");
+INSERT INTO skills VALUES(004,003,"acting");
+INSERT INTO skills VALUES(005,003,"dance");
+
+
+INSERT INTO roles VALUES(001,001,"hero_movie1");
+INSERT INTO roles VALUES(002,002,"hero_movie2");
+INSERT INTO roles VALUES(003,002,"hero_movie3");
+
+
+-- fetch 
+SELECT movies.name, media.media_file, genres.genre,reviews.review,actors.actor_name,skills.skill,roles.role
+FROM movies
+INNER JOIN media
+ON movies.id = media.media_id
+INNER JOIN genres
+ON movies.id = genres.genre_id
+INNER JOIN reviews
+ON movies.id = reviews.review_id
+INNER JOIN actors
+ON movies.id = actors.actor_id
+INNER JOIN skills
+ON actors.id = skills.skill_id
+INNER JOIN roles
+ON actors.id = roles.role_id
+
